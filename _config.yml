@@ -1,5 +1,8 @@
+# Configurações simples do GitHub Pages
+include: ["_next"]
+exclude: ["node_modules"]
+
 baseurl: ""
 url: "https://juniormarquiore.github.io/marquiorefilms"
-include: ["_next", "_app"]
 plugins:
   - jekyll-sitemap 

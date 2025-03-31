@@ -5,6 +5,7 @@ const nextConfig = {
     domains: ['i.imgur.com'], // Adiciona suporte a imagens do Imgur
     unoptimized: process.env.NODE_ENV === 'production', // Necessário para exportação estática
   },
+  trailingSlash: true, // Importante para exportação estática
 };
 
 module.exports = nextConfig;
