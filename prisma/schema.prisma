@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Modelos para configuração do site
+
+model SiteConfig {
+  id                Int      @id @default(autoincrement())
+  name              String   @default("Marquiore Films")
+  logoUrl           String?
+  faviconUrl        String?
+  primaryColor      String   @default("#a67c52")
+  secondaryColor    String   @default("#0f1013")
+  accentColor       String   @default("#d4af7a")
+  textColor         String   @default("#ffffff")
+  backgroundColor   String   @default("#0f1013")
+  footerText        String?
+  googleAnalyticsId String?
+  metaPixelId       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Section {
+  id           Int      @id @default(autoincrement())
+  name         String
+  title        String
+  subtitle     String?
+  description  String?
+  isActive     Boolean  @default(true)
+  displayOrder Int      @default(0)
+  content      Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SeoConfig {
+  id               Int      @id @default(autoincrement())
+  pagePath         String   @unique
+  title            String
+  description      String?
+  keywords         String?
+  ogTitle          String?
+  ogDescription    String?
+  ogImageUrl       String?
+  twitterTitle     String?
+  twitterDescription String?
+  twitterImageUrl  String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model TestimonialItem {
+  id             Int      @id @default(autoincrement())
+  coupleName     String
+  eventDate      DateTime
+  content        String
+  location       String?
+  rating         Int      @default(5)
+  photoUrl       String?
+  isDisplayed    Boolean  @default(true)
+  displayOrder   Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model PortfolioItem {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String?
+  videoUrl     String
+  thumbnailUrl String?
+  category     String
+  tags         String?
+  isFeatured   Boolean  @default(false)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ServicePackage {
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Float
+  description String?
+  features    String
+  isPopular   Boolean  @default(false)
+  displayOrder Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MediaFile {
+  id           Int      @id @default(autoincrement())
+  name         String
+  type         String
+  size         String
+  url          String
+  thumbnailUrl String?
+  uploadedAt   DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
