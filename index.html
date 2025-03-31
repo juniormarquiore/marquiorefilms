@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marquiore Films - Filmagem de Casamentos</title>
+    <meta name="description" content="Marquiore Films - Capturamos emoções, transformamos momentos em lembranças eternas. Especialistas em filmagem de casamentos.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('public/images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #f4bd50;
+        }
+        
+        p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: #f4bd50;
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            margin: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #e5a940;
+            transform: translateY(-3px);
+        }
+        
+        .secondary-btn {
+            background-color: transparent;
+            border: 2px solid #f4bd50;
+            color: #f4bd50;
+        }
+        
+        .secondary-btn:hover {
+            background-color: rgba(244, 189, 80, 0.1);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .separator {
+            width: 150px;
+            height: 4px;
+            background-color: #f4bd50;
+            margin: 2rem auto;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Redirecionar para o site em produção após 5 segundos
+        setTimeout(function() {
+            window.location.href = "/marquiorefilms/";
+        }, 5000);
+    </script>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <h1>Marquiore Films</h1>
+            <h2>Filmagem de Casamentos</h2>
+            <p>Capturamos emoções, transformamos momentos em lembranças eternas.</p>
+            <div class="separator"></div>
+            <p>Redirecionando para o site em 5 segundos...</p>
+            <div>
+                <a href="/marquiorefilms/" class="btn">Ir para o site agora</a>
+                <a href="https://github.com/juniormarquiore/marquiorefilms" class="btn secondary-btn">Ver no GitHub</a>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 Marquiore Films - Todos os direitos reservados</p>
+    </footer>
+</body>
+</html> 
