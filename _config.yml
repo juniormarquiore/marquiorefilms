@@ -1,0 +1,5 @@
+baseurl: ""
+url: "https://juniormarquiore.github.io/marquiorefilms"
+include: ["_next", "_app"]
+plugins:
+  - jekyll-sitemap 

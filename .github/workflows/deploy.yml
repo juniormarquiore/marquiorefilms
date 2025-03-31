@@ -24,7 +24,15 @@ jobs:
       - name: Build Next.js app 🏗️
         run: npm run build
         # A exportação estática já é feita durante o build com output: 'export'
+        
+      - name: Copy .nojekyll file
+        run: cp .nojekyll out/
 
+      - name: Copy configuration files
+        run: |
+          cp _config.yml out/
+          cp README.md out/
+        
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
