@@ -34,6 +34,26 @@ jobs:
           cp README.md out/
           cp index.html out/
           cp public/CNAME out/
+          cp public/app-page.html out/
+          
+      - name: Create navigation scripts
+        run: |
+          # Cria um script para redirecionar para a página inicial
+          echo '<!DOCTYPE html>
+          <html>
+            <head>
+              <meta http-equiv="refresh" content="0;url=app/page/index.html">
+              <script>window.location.href = "app/page/index.html";</script>
+              <title>Redirecionando...</title>
+            </head>
+            <body>
+              <p>Redirecionando para a página inicial...</p>
+              <a href="app/page/index.html">Clique aqui se não for redirecionado automaticamente</a>
+            </body>
+          </html>' > out/navigate.html
+          
+          # Copia este script para locais estratégicos
+          cp out/navigate.html out/index.html
           
       - name: Ensure index.html exists and verify files
         run: |
