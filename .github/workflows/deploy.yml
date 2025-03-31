@@ -32,16 +32,18 @@ jobs:
         run: |
           cp _config.yml out/
           cp README.md out/
+          cp index.html out/
+          cp public/CNAME out/
           
-      - name: Ensure index.html exists
+      - name: Ensure index.html exists and verify files
         run: |
-          # Se não existir um index.html na pasta out, criar um que redireciona para a página principal
-          if [ ! -f out/index.html ]; then
-            echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=/"></head><body>Redirecionando...</body></html>' > out/index.html
-            echo "Created fallback index.html"
-          fi
           # Verificar arquivos na pasta out
+          echo "Verificando arquivos na pasta out:"
           ls -la out/
+          
+          # Verificar arquivos HTML
+          echo "Verificando arquivos HTML:"
+          find out -name "*.html" | sort
         
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
