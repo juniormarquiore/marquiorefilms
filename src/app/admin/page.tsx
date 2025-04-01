@@ -30,20 +30,30 @@ interface ImageItem {
 export default function AdminDashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Verificar autenticação quando o componente é montado
   useEffect(() => {
     const checkAuth = () => {
-      const auth = localStorage.getItem('isAuthenticated');
-      if (auth !== 'true') {
-        router.push('/auth/login');
-      } else {
-        setIsAuthenticated(true);
+      try {
+        const auth = sessionStorage.getItem('isAuthenticated');
+        if (auth !== 'true') {
+          window.location.href = '/auth/login';
+        } else {
+          setIsAuthenticated(true);
+        }
+      } catch (err) {
+        console.error('Erro ao verificar autenticação:', err);
+        window.location.href = '/auth/login';
+      } finally {
+        setIsLoading(false);
       }
     };
     
-    checkAuth();
-  }, [router]);
+    // Adicionar um pequeno atraso para garantir que a verificação
+    // só ocorre após o carregamento completo do navegador
+    setTimeout(checkAuth, 500);
+  }, []);
 
   // Estado para controlar a aba ativa
   const [activeTab, setActiveTab] = useState<'dashboard' | 'images' | 'texts' | 'theme'>('dashboard');
@@ -161,9 +171,34 @@ export default function AdminDashboard() {
     ? textContents.find(text => text.id === selectedTextId) 
     : null;
 
-  // Se não estiver autenticado, não renderiza o conteúdo
-  if (!isAuthenticated) {
-    return <div className="min-h-screen flex items-center justify-center">Verificando autenticação...</div>;
+  // Função para fazer logout
+  const handleLogout = () => {
+    try {
+      sessionStorage.removeItem('isAuthenticated');
+      sessionStorage.removeItem('user');
+      window.location.href = '/auth/login';
+    } catch (err) {
+      console.error('Erro ao fazer logout:', err);
+    }
+  };
+
+  // Se estiver carregando ou não estiver autenticado, mostra o estado de carregamento
+  if (isLoading || !isAuthenticated) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+        <div className="text-xl font-semibold text-gray-700 mb-4">Verificando autenticação...</div>
+        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+          <p className="text-center text-gray-500">Se você não for redirecionado em alguns segundos, 
+            <button 
+              onClick={() => window.location.href = '/auth/login'}
+              className="text-blue-500 hover:text-blue-700 ml-1"
+            >
+              clique aqui para fazer login
+            </button>
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -173,11 +208,7 @@ export default function AdminDashboard() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800">Painel Administrativo Marquiore Films</h1>
           <button 
-            onClick={() => {
-              localStorage.removeItem('isAuthenticated');
-              localStorage.removeItem('user');
-              router.push('/auth/login');
-            }}
+            onClick={handleLogout}
             className="text-red-600 hover:text-red-800 text-sm"
           >
             Sair

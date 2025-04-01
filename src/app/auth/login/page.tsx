@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -10,22 +10,42 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const router = useRouter();
 
+  // Verificar se já está autenticado ao carregar a página
+  useEffect(() => {
+    try {
+      const auth = sessionStorage.getItem('isAuthenticated');
+      if (auth === 'true') {
+        router.push('/admin');
+      }
+    } catch (err) {
+      console.error('Erro ao verificar autenticação:', err);
+    }
+  }, [router]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     // Verificação simples das credenciais
     if (email === 'admin@marquiore.com' && password === 'marquire96@') {
-      // Armazenar o estado de autenticação
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('user', JSON.stringify({ 
-        email, 
-        name: 'Administrador',
-        role: 'admin'
-      }));
-      
-      // Redirecionar para o painel administrativo
-      router.push('/admin');
+      try {
+        // Armazenar o estado de autenticação em sessionStorage (mais seguro que localStorage para esta finalidade)
+        sessionStorage.setItem('isAuthenticated', 'true');
+        sessionStorage.setItem('user', JSON.stringify({ 
+          email, 
+          name: 'Administrador',
+          role: 'admin'
+        }));
+        
+        // Adicionar um pequeno atraso para garantir que os dados sejam salvos
+        setTimeout(() => {
+          // Redirecionar para o painel administrativo
+          window.location.href = '/admin';
+        }, 100);
+      } catch (err) {
+        console.error('Erro ao salvar autenticação:', err);
+        setError('Erro ao fazer login. Tente novamente.');
+      }
     } else {
       setError('Email ou senha incorretos');
     }
@@ -39,10 +59,7 @@ export default function LoginPage() {
             Entre na sua conta
           </h1>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Ou{' '}
-            <Link href="#" className="font-medium text-primary hover:text-primary-dark">
-              crie uma nova conta
-            </Link>
+            Acesse o painel administrativo da Marquiore Films
           </p>
         </div>
         
@@ -83,6 +100,11 @@ export default function LoginPage() {
               {error}
             </div>
           )}
+
+          <div className="text-sm text-gray-500 text-center">
+            <p>Email: admin@marquiore.com</p>
+            <p>Senha: marquire96@</p>
+          </div>
 
           <div>
             <button
