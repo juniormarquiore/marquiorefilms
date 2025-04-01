@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ThemeProvider from '@/components/ThemeProvider';
 import { AuthProvider } from '@/contexts/AuthContext';
-import '../styles/globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,7 +12,11 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-const playfair = Playfair_Display({ subsets: ['latin'] });
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair',
+});
 
 export const metadata: Metadata = {
   title: 'Marquiore Filmes | Filmagem de Casamentos',
@@ -26,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${playfair.className}`}>
+    <html lang="pt-BR" className={`${inter.variable} ${playfair.variable}`}>
       <head>
         <title>Marquiore Films - Cinematografia de Casamentos</title>
         <meta name="description" content="Transformando momentos em arte cinematográfica" />
@@ -35,7 +38,7 @@ export default function RootLayout({
         <AuthProvider>
           <ThemeProvider>
             <Navbar />
-            <main className="pt-20">{children}</main>
+            <main className="min-h-screen pt-20">{children}</main>
             <Footer />
           </ThemeProvider>
         </AuthProvider>

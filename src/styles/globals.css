@@ -61,4 +61,10 @@
   .section-content {
     @apply text-[var(--text-secondary)] text-lg md:text-xl;
   }
+  .nav-link {
+    @apply text-[var(--text-primary)] hover:text-[var(--primary)] transition-colors;
+  }
+  .footer-link {
+    @apply text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors;
+  }
 } 
