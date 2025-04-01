@@ -42,18 +42,38 @@ jobs:
           echo '<!DOCTYPE html>
           <html>
             <head>
-              <meta http-equiv="refresh" content="0;url=app/page/index.html">
-              <script>window.location.href = "app/page/index.html";</script>
+              <meta http-equiv="refresh" content="0;url=index.html">
+              <script>window.location.href = "index.html";</script>
               <title>Redirecionando...</title>
             </head>
             <body>
               <p>Redirecionando para a página inicial...</p>
-              <a href="app/page/index.html">Clique aqui se não for redirecionado automaticamente</a>
+              <a href="index.html">Clique aqui se não for redirecionado automaticamente</a>
             </body>
           </html>' > out/navigate.html
           
-          # Copia este script para locais estratégicos
-          cp out/navigate.html out/index.html
+          # Verificar a estrutura de arquivos gerada
+          find out -type f -name "*.html" | sort
+          
+          # Criar arquivo 404.html para redirecionamento
+          echo '<!DOCTYPE html>
+          <html>
+            <head>
+              <meta http-equiv="refresh" content="0;url=/">
+              <script>window.location.href = "/";</script>
+              <title>Página não encontrada</title>
+              <style>
+                body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+                h1 { color: #f4bd50; }
+                a { color: #f4bd50; }
+              </style>
+            </head>
+            <body>
+              <h1>Página não encontrada</h1>
+              <p>Redirecionando para a página inicial...</p>
+              <a href="/">Clique aqui se não for redirecionado automaticamente</a>
+            </body>
+          </html>' > out/404.html
           
       - name: Ensure index.html exists and verify files
         run: |
@@ -64,6 +84,12 @@ jobs:
           # Verificar arquivos HTML
           echo "Verificando arquivos HTML:"
           find out -name "*.html" | sort
+          
+          # Garantir que há um index.html na raiz
+          if [ ! -f out/index.html ]; then
+            cp out/navigate.html out/index.html
+            echo "Criado index.html na raiz"
+          fi
         
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4

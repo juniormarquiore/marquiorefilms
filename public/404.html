@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página não encontrada - Marquiore Films</title>
-    <meta http-equiv="refresh" content="3; url=/">
+    <meta http-equiv="refresh" content="1;url=/">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -21,8 +21,9 @@
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
+            color: #f4bd50;
         }
         
         p {
@@ -31,37 +32,25 @@
             max-width: 600px;
         }
         
-        .logo {
-            font-size: 3rem;
+        a {
             color: #f4bd50;
-            margin-bottom: 2rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #f4bd50;
-            color: #000;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            background-color: #e5a940;
-            transform: translateY(-3px);
+            text-decoration: underline;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Tentativa de redirecionamento via JavaScript como backup
+        window.onload = function() {
+            setTimeout(function() {
+                window.location.href = "/";
+            }, 1500);
+        };
+    </script>
 </head>
 <body>
-    <div class="logo">Marquiore Films</div>
-    
     <h1>Página não encontrada</h1>
-    
-    <p>Desculpe, a página que você está procurando não existe ou foi movida. Você será redirecionado para a página inicial em 3 segundos.</p>
-    
-    <a href="/" class="btn">Ir para a página inicial</a>
+    <p>Desculpe, a página que você está procurando não existe.</p>
+    <p>Você será redirecionado para a página inicial em alguns segundos...</p>
+    <p><a href="/">Clique aqui se não for redirecionado automaticamente</a></p>
 </body>
 </html> 
