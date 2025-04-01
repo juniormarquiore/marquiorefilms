@@ -1,6 +1,32 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function ContatoPage() {
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    assunto: '',
+    mensagem: ''
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Aqui você implementaria a lógica para enviar o formulário
+    console.log('Dados do formulário:', formData);
+    alert('Mensagem enviada com sucesso!');
+    setFormData({ nome: '', email: '', assunto: '', mensagem: '' });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4">
@@ -58,7 +84,7 @@ export default function ContatoPage() {
           {/* Formulário de Contato */}
           <div className="bg-white p-8 rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold mb-6">Envie uma Mensagem</h2>
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-1">
                   Nome
@@ -67,6 +93,8 @@ export default function ContatoPage() {
                   type="text"
                   id="nome"
                   name="nome"
+                  value={formData.nome}
+                  onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
                   required
                 />
@@ -80,6 +108,8 @@ export default function ContatoPage() {
                   type="email"
                   id="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
                   required
                 />
@@ -93,6 +123,8 @@ export default function ContatoPage() {
                   type="text"
                   id="assunto"
                   name="assunto"
+                  value={formData.assunto}
+                  onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
                   required
                 />
@@ -105,6 +137,8 @@ export default function ContatoPage() {
                 <textarea
                   id="mensagem"
                   name="mensagem"
+                  value={formData.mensagem}
+                  onChange={handleChange}
                   rows={4}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
                   required

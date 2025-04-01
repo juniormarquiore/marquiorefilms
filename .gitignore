@@ -1,6 +1,6 @@
 # .gitignore para projetos Next.js
 
-# dependências
+# dependencies
 /node_modules
 /.pnp
 .pnp.js
@@ -12,7 +12,7 @@
 /.next/
 /out/
 
-# produção
+# production
 /build
 
 # misc
