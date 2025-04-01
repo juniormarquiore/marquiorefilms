@@ -27,7 +27,7 @@ export default function LoginPage() {
     setError('');
 
     // Verificação simples das credenciais
-    if (email === 'admin@marquiore.com' && password === 'marquire96@') {
+    if (email === 'admin@marquiore.com' && password === 'marquiore96@') {
       try {
         // Armazenar o estado de autenticação em sessionStorage (mais seguro que localStorage para esta finalidade)
         sessionStorage.setItem('isAuthenticated', 'true');
@@ -103,7 +103,7 @@ export default function LoginPage() {
 
           <div className="text-sm text-gray-500 text-center">
             <p>Email: admin@marquiore.com</p>
-            <p>Senha: marquire96@</p>
+            <p>Senha: marquiore96@</p>
           </div>
 
           <div>
