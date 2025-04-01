@@ -42,7 +42,7 @@
     @apply text-xl md:text-2xl font-medium mb-4;
   }
   .elegant-title {
-    @apply font-playfair text-[var(--primary)] drop-shadow-lg;
+    @apply font-serif text-[var(--primary)] drop-shadow-lg;
   }
   .elegant-button {
     @apply bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]

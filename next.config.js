@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  basePath: '/marquiorefilms',
+  basePath: process.env.NODE_ENV === 'production' ? '/marquiorefilms' : '',
   images: {
     unoptimized: true,
   },
