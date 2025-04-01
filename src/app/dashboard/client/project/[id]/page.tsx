@@ -1,6 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 
+// Função para gerar os parâmetros estáticos
+export async function generateStaticParams() {
+  // Lista de IDs de projetos para gerar páginas estáticas
+  const projectIds = ['1', '2', '3'];
+  
+  return projectIds.map((id) => ({
+    id,
+  }));
+}
+
 // Componente para exibir as etapas de edição
 const EditingStage = ({ 
   title, 

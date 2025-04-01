@@ -1,6 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 
+// Função para gerar os parâmetros estáticos
+export async function generateStaticParams() {
+  // Lista de IDs de contratos para gerar páginas estáticas
+  const contractIds = ['1', '2', '3'];
+  
+  return contractIds.map((id) => ({
+    id,
+  }));
+}
+
 export default function ContractPage({ params }: { params: { id: string } }) {
   // Dados mockados para demonstração
   const contract = {

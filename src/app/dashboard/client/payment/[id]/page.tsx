@@ -1,6 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 
+// Função para gerar os parâmetros estáticos
+export async function generateStaticParams() {
+  // Lista de IDs de pagamentos para gerar páginas estáticas
+  const paymentIds = ['1', '2', '3'];
+  
+  return paymentIds.map((id) => ({
+    id,
+  }));
+}
+
 // Componente para o status do pagamento
 const PaymentStatus = ({ status }: { status: string }) => {
   const getStatusColor = () => {
