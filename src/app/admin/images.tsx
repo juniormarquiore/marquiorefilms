@@ -30,18 +30,18 @@ export default function ImageEditor() {
   };
 
   return (
-    <div className="min-h-screen p-8">
-      <h1 className="text-3xl font-bold mb-8">Editor de Imagens</h1>
+    <div className="min-h-screen p-8 bg-gray-100">
+      <h1 className="text-3xl font-bold mb-8 text-gray-800">Editor de Imagens</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Lista de imagens do site */}
         <div className="col-span-1 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Imagens do Site</h2>
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">Imagens do Site</h2>
           <ul className="space-y-2">
             {siteImages.map((image) => (
               <li 
                 key={image.id}
-                className={`p-3 rounded cursor-pointer hover:bg-gray-100 ${selectedImage === image.path ? 'bg-gray-200' : ''}`}
+                className={`p-3 rounded cursor-pointer hover:bg-gray-100 ${selectedImage === image.path ? 'bg-gray-200' : ''} text-gray-700`}
                 onClick={() => setSelectedImage(image.path)}
               >
                 {image.name}
@@ -52,7 +52,7 @@ export default function ImageEditor() {
         
         {/* Preview e upload */}
         <div className="col-span-2 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">
             {selectedImage ? 'Substituir Imagem' : 'Upload de Nova Imagem'}
           </h2>
           
@@ -93,7 +93,7 @@ export default function ImageEditor() {
               type="file"
               accept="image/*"
               onChange={handleImageUpload}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
             />
           </div>
           
@@ -101,7 +101,7 @@ export default function ImageEditor() {
           {previewImage && (
             <button
               onClick={handleImageSave}
-              className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
             >
               Salvar Alterações
             </button>
