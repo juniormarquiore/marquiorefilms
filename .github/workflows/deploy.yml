@@ -2,39 +2,52 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - master
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ⚙️
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: "18"
           cache: 'npm'
 
-      - name: Install dependencies 🔧
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build Next.js app 🏗️
+      - name: Build with Next.js
         run: npm run build
 
-      - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: out
-          branch: gh-pages
+          path: ./out
 
-      - name: Configure GitHub Pages settings ⚙️
-        run: |
-          # Configura o branch gh-pages como fonte do GitHub Pages
-          curl -X PUT \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{"source":{"branch":"gh-pages"}}' \
-            https://api.github.com/repos/${{ github.repository }}/pages 
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 

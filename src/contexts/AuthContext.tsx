@@ -12,46 +12,35 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  token: string | null;
-  login: (token: string, user: User) => Promise<void>;
-  logout: () => void;
   isAuthenticated: boolean;
+  login: (user: User) => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // Verificar se há dados de autenticação nos cookies
-    const storedToken = Cookies.get('token');
     const storedUser = Cookies.get('user');
-
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Erro ao carregar usuário:', error);
+        Cookies.remove('user');
+      }
     }
   }, []);
 
-  const login = async (newToken: string, newUser: User) => {
-    // Salvar dados nos cookies
-    Cookies.set('token', newToken, { expires: 7 }); // Expira em 7 dias
+  const login = (newUser: User) => {
     Cookies.set('user', JSON.stringify(newUser), { expires: 7 });
-
-    // Atualizar estado
-    setToken(newToken);
     setUser(newUser);
   };
 
   const logout = () => {
-    // Remover dados dos cookies
-    Cookies.remove('token');
     Cookies.remove('user');
-
-    // Limpar estado
-    setToken(null);
     setUser(null);
   };
 
@@ -59,10 +48,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     <AuthContext.Provider
       value={{
         user,
-        token,
+        isAuthenticated: !!user,
         login,
         logout,
-        isAuthenticated: !!token,
       }}
     >
       {children}
