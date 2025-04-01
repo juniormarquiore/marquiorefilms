@@ -32,10 +32,10 @@ export default function LoginPage() {
       // Esta é uma simulação para fins de demonstração
       if (data.email === 'admin@marquiore.com' && data.password === 'admin123') {
         // Admin login
-        router.push('/admin');
+        router.push('/dashboard/admin');
       } else if (data.email === 'cliente@exemplo.com' && data.password === 'cliente123') {
         // Cliente login
-        router.push('/dashboard');
+        router.push('/dashboard/client');
       } else {
         setError('Email ou senha incorretos');
       }
