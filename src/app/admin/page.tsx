@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 // Componentes e tipos para as diferentes funcionalidades
 interface TextContent {
@@ -27,8 +28,9 @@ interface ImageItem {
   path: string;
 }
 
-export default function AdminDashboard() {
+const AdminPage = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -208,7 +210,7 @@ export default function AdminDashboard() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800">Painel Administrativo Marquiore Films</h1>
           <button 
-            onClick={handleLogout}
+            onClick={() => signOut()}
             className="text-red-600 hover:text-red-800 text-sm"
           >
             Sair
@@ -598,4 +600,6 @@ export default function AdminDashboard() {
       </div>
     </div>
   );
-} 
+};
+
+export default AdminPage; 
