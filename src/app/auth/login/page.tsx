@@ -3,153 +3,106 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
-const loginSchema = z.object({
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
-});
-
-type LoginFormData = z.infer<typeof loginSchema>;
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const router = useRouter();
-  
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  const { login } = useAuth();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
   });
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (data: LoginFormData) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
     setIsLoading(true);
-    setError('');
-    
+
     try {
-      // Em um ambiente real, substituiríamos isso por uma chamada de API real
-      // Esta é uma simulação para fins de demonstração
-      if (data.email === 'admin@marquiore.com' && data.password === 'admin123') {
-        // Admin login
-        router.push('/dashboard/admin');
-      } else if (data.email === 'cliente@exemplo.com' && data.password === 'cliente123') {
-        // Cliente login
-        router.push('/dashboard/client');
-      } else {
-        setError('Email ou senha incorretos');
-      }
+      // Aqui você implementaria a chamada real à API
+      // Por enquanto, vamos simular um login bem-sucedido
+      const mockResponse = {
+        token: 'mock-token',
+        user: {
+          id: '1',
+          name: 'Usuário Teste',
+          email: formData.email,
+          role: 'client' as const,
+        },
+      };
+
+      await login(mockResponse.token, mockResponse.user);
+      router.push('/dashboard');
     } catch (err) {
-      setError('Ocorreu um erro ao fazer login. Tente novamente.');
-    } finally {
+      setError('Email ou senha inválidos');
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary relative">
-      {/* Background decorativo inspirado em arte renascentista */}
-      <div className="absolute inset-0 bg-cover bg-center opacity-10" 
-        style={{ backgroundImage: "url('https://img.freepik.com/premium-vector/renaissance-pattern-background-luxury-royal-ornament-design_572038-338.jpg')" }}>
-      </div>
-      
-      {/* Elemento sutil da Criação de Adão */}
-      <div className="absolute top-10 right-10 md:top-20 md:right-20 w-32 h-32 opacity-20 bg-contain bg-no-repeat hidden md:block"
-        style={{ backgroundImage: "url('https://static.vecteezy.com/system/resources/previews/024/043/840/non_2x/the-creation-of-adam-michelangelo-hand-illustration-ai-generated-free-png.png')" }}>
-      </div>
-      
-      <div className="max-w-md w-full p-8 bg-gray-900 rounded-lg shadow-lg relative z-10 border border-primary/20">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-primary font-serif">Marquiore Filmes</h1>
-          <p className="text-gray-300 mt-2">Área exclusiva para clientes</p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Entre na sua conta
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Ou{' '}
+            <Link href="/auth/register" className="font-medium text-primary hover:text-primary-dark">
+              crie uma nova conta
+            </Link>
+          </p>
         </div>
-
-        {error && (
-          <div className="bg-red-900/50 border border-red-500 text-red-100 px-4 py-2 rounded mb-6">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="seu@email.com"
-              {...register('email')}
-            />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
-              Senha
-            </label>
-            <input
-              id="password"
-              type="password"
-              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="******"
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
-            )}
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 bg-gray-800 border-gray-700 rounded text-primary focus:ring-primary"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
-                Lembrar-me
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="email" className="sr-only">
+                Email
               </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                placeholder="Email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
             </div>
-            <div className="text-sm">
-              <a href="#" className="text-primary hover:underline">
-                Esqueceu a senha?
-              </a>
+            <div>
+              <label htmlFor="password" className="sr-only">
+                Senha
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                placeholder="Senha"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              />
             </div>
           </div>
+
+          {error && (
+            <div className="text-red-600 text-sm text-center">{error}</div>
+          )}
 
           <div>
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2 px-4 bg-primary text-secondary font-bold rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 relative overflow-hidden group"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50"
             >
-              <span className="relative z-10">{isLoading ? 'Entrando...' : 'Entrar'}</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              {isLoading ? 'Entrando...' : 'Entrar'}
             </button>
           </div>
         </form>
-
-        <div className="mt-6 text-center">
-          <p className="text-gray-300">
-            Não tem uma conta?{' '}
-            <Link href="/auth/register" className="text-primary hover:underline">
-              Cadastre-se
-            </Link>
-          </p>
-          <Link href="/" className="text-sm text-gray-400 hover:text-gray-300 mt-4 inline-block">
-            ← Voltar para a página inicial
-          </Link>
-        </div>
-        
-        {/* Decoração sutil na parte inferior */}
-        <div className="absolute -bottom-10 -right-10 w-24 h-24 opacity-20 bg-contain bg-no-repeat"
-          style={{ backgroundImage: "url('https://www.pngall.com/wp-content/uploads/5/Greek-Pillar-PNG-Image.png')" }}>
-        </div>
       </div>
     </div>
   );
