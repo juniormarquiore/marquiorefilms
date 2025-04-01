@@ -2,9 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: #1A0F0F;
+  --foreground: #E8D5C4;
+  --primary: #C4A484;
+  --secondary: #8B4513;
+  --accent: #CD7F32;
+  --text-primary: #F5F5DC;
+  --text-secondary: #D2B48C;
+}
+
 @layer base {
   body {
-    @apply bg-secondary text-accent;
+    @apply bg-[var(--background)] text-[var(--text-primary)];
+    background-image: linear-gradient(to right, rgba(26, 15, 15, 0.9), rgba(26, 15, 15, 0.95));
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
@@ -29,5 +40,31 @@
   }
   .subtitle {
     @apply text-xl md:text-2xl font-medium mb-4;
+  }
+  .elegant-title {
+    @apply font-serif text-[var(--primary)] drop-shadow-lg;
+  }
+  .elegant-button {
+    @apply bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]
+           text-[var(--text-primary)] px-8 py-3 rounded-full
+           border border-[var(--accent)] transition-all duration-300
+           hover:transform hover:-translate-y-1 hover:shadow-lg;
+  }
+  .card-luxury {
+    @apply bg-[var(--background)]/80 border border-[var(--accent)]
+           rounded-lg p-8 transition-all duration-300
+           hover:transform hover:-translate-y-2 hover:shadow-xl;
+  }
+  .section-title {
+    @apply elegant-title text-4xl md:text-5xl text-center mb-12;
+  }
+  .section-content {
+    @apply text-[var(--text-secondary)] text-lg md:text-xl;
+  }
+  .nav-link {
+    @apply text-[var(--text-primary)] hover:text-[var(--primary)] transition-colors;
+  }
+  .footer-link {
+    @apply text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors;
   }
 } 

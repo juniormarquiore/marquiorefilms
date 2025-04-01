@@ -39,8 +39,9 @@ export default function LoginPage() {
         
         // Adicionar um pequeno atraso para garantir que os dados sejam salvos
         setTimeout(() => {
-          // Redirecionar para o painel administrativo
-          window.location.href = '/admin';
+          // Redirecionar para o painel administrativo considerando o basePath
+          const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+          window.location.href = `${basePath}/admin`;
         }, 100);
       } catch (err) {
         console.error('Erro ao salvar autenticação:', err);
