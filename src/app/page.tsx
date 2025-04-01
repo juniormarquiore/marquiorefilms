@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <main className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center">
         <div className="absolute inset-0 z-0">
@@ -11,37 +11,41 @@ export default function Home() {
             src="/images/hero-bg.jpg"
             alt="Background"
             fill
-            className="object-cover"
+            className="object-cover opacity-30"
             priority
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)]/90 to-[var(--background)]/80" />
         </div>
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">Marquiore Films</h1>
-          <p className="text-xl md:text-2xl mb-8">Transformando momentos em arte cinematográfica</p>
-          <Link
-            href="/contato"
-            className="bg-primary text-white px-8 py-3 rounded-md text-lg hover:bg-primary-dark transition-colors"
-          >
-            Entre em Contato
-          </Link>
+        
+        <div className="container mx-auto px-4 z-10">
+          <div className="text-center">
+            <h1 className="elegant-title text-6xl md:text-8xl mb-6">
+              Marquiore Films
+            </h1>
+            <p className="section-content mb-12">
+              Transformando momentos em arte cinematográfica
+            </p>
+            <Link href="/contato" className="elegant-button">
+              Entre em Contato
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Sobre Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Sobre Nós</h2>
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-lg text-gray-700 mb-8">
+          <h2 className="section-title">Sobre Nós</h2>
+          <div className="card-luxury max-w-4xl mx-auto text-center">
+            <p className="section-content mb-8">
               A Marquiore Films é uma empresa especializada em filmagem de casamentos, 
               transformando momentos especiais em arte cinematográfica.
             </p>
             <Link
               href="/sobre"
-              className="text-primary hover:text-primary-dark transition-colors"
+              className="elegant-button inline-block"
             >
-              Saiba mais sobre nossa história →
+              Nossa História
             </Link>
           </div>
         </div>
@@ -50,52 +54,53 @@ export default function Home() {
       {/* Serviços Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Nossos Serviços</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4">Filme do Casamento</h3>
-              <p className="text-gray-600">
-                Capturamos cada momento especial do seu grande dia com qualidade profissional.
+          <h2 className="section-title">Nossos Serviços</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="card-luxury">
+              <h3 className="elegant-title text-2xl mb-6">Filme do Casamento</h3>
+              <p className="section-content">
+                Capturamos cada momento especial do seu grande dia com qualidade cinematográfica.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4">Same Day Edit</h3>
-              <p className="text-gray-600">
-                Edição rápida para compartilhar os melhores momentos do seu casamento no mesmo dia.
+            <div className="card-luxury">
+              <h3 className="elegant-title text-2xl mb-6">Same Day Edit</h3>
+              <p className="section-content">
+                Edição especial no mesmo dia do evento para compartilhar momentos únicos.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4">Ensaio Pré-Wedding</h3>
-              <p className="text-gray-600">
-                Sessão fotográfica especial para capturar a essência do casal antes do casamento.
+            <div className="card-luxury">
+              <h3 className="elegant-title text-2xl mb-6">Ensaio Pré-Wedding</h3>
+              <p className="section-content">
+                Sessões exclusivas para capturar a essência do seu amor.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Portfólio Preview */}
-      <section className="py-20 bg-gray-50">
+      {/* Portfólio Section */}
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Nosso Portfólio</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <h2 className="section-title">Nosso Portfólio</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src={`/images/portfolio-${i}.jpg`}
-                  alt={`Portfólio ${i}`}
-                  fill
-                  className="object-cover"
-                />
+              <div key={i} className="card-luxury overflow-hidden">
+                <div className="relative h-64 mb-4">
+                  <Image
+                    src={`/images/portfolio-${i}.jpg`}
+                    alt={`Portfólio ${i}`}
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+                <h3 className="elegant-title text-xl mb-2">Casamento {i}</h3>
+                <p className="section-content">Uma história de amor única</p>
               </div>
             ))}
           </div>
-          <div className="text-center mt-8">
-            <Link
-              href="/portfolio"
-              className="text-primary hover:text-primary-dark transition-colors"
-            >
-              Ver mais trabalhos →
+          <div className="text-center mt-12">
+            <Link href="/portfolio" className="elegant-button">
+              Ver Mais Trabalhos
             </Link>
           </div>
         </div>
@@ -104,20 +109,17 @@ export default function Home() {
       {/* Contato Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Entre em Contato</h2>
-          <div className="max-w-2xl mx-auto text-center">
-            <p className="text-lg text-gray-700 mb-8">
+          <h2 className="section-title">Entre em Contato</h2>
+          <div className="card-luxury max-w-3xl mx-auto text-center">
+            <p className="section-content mb-8">
               Estamos prontos para transformar seu casamento em uma obra de arte cinematográfica.
             </p>
-            <Link
-              href="/contato"
-              className="bg-primary text-white px-8 py-3 rounded-md text-lg hover:bg-primary-dark transition-colors"
-            >
+            <Link href="/contato" className="elegant-button">
               Fale Conosco
             </Link>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 } 

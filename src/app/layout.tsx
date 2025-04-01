@@ -30,6 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${playfair.variable}`}>
+      <head>
+        <title>Marquiore Films - Cinematografia de Casamentos</title>
+        <meta name="description" content="Transformando momentos em arte cinematográfica" />
+      </head>
       <body>
         <AuthProvider>
           <ThemeProvider>
