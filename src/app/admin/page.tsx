@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 // Componentes e tipos para as diferentes funcionalidades
 interface TextContent {
@@ -27,6 +28,23 @@ interface ImageItem {
 }
 
 export default function AdminDashboard() {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Verificar autenticação quando o componente é montado
+  useEffect(() => {
+    const checkAuth = () => {
+      const auth = localStorage.getItem('isAuthenticated');
+      if (auth !== 'true') {
+        router.push('/auth/login');
+      } else {
+        setIsAuthenticated(true);
+      }
+    };
+    
+    checkAuth();
+  }, [router]);
+
   // Estado para controlar a aba ativa
   const [activeTab, setActiveTab] = useState<'dashboard' | 'images' | 'texts' | 'theme'>('dashboard');
 
@@ -143,12 +161,27 @@ export default function AdminDashboard() {
     ? textContents.find(text => text.id === selectedTextId) 
     : null;
 
+  // Se não estiver autenticado, não renderiza o conteúdo
+  if (!isAuthenticated) {
+    return <div className="min-h-screen flex items-center justify-center">Verificando autenticação...</div>;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Cabeçalho */}
       <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800">Painel Administrativo Marquiore Films</h1>
+          <button 
+            onClick={() => {
+              localStorage.removeItem('isAuthenticated');
+              localStorage.removeItem('user');
+              router.push('/auth/login');
+            }}
+            className="text-red-600 hover:text-red-800 text-sm"
+          >
+            Sair
+          </button>
         </div>
       </header>
 
